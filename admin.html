@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
 <title>لوحة الإدارة السرية - POKI MEGA ENTERPRISE 2.0</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root { --bg: #ffffff; --text: #0a0a0a; --accent: #000000; --border: #e0e0e0; --card-bg: #fafafa; }
 * { box-sizing: border-box; transition: all 0.25s ease; }
@@ -27,7 +26,7 @@ tr:hover { background: #f9f9f9; }
 
 <header>
     <h1>🔒 لوحة الإدارة السرية المطلقة</h1>
-    <p>منطقة محظورة ومخفية عن العامة | إشراف وتطوير: أبو العز العمري</p>
+    <p>منطقة محظورة ومخفية عن العامة | إدارة وتطوير: أبو العز العمري</p>
 </header>
 
 <div class="container">
@@ -53,10 +52,12 @@ tr:hover { background: #f9f9f9; }
 </div>
 
 <script>
-// الاتصال بقاعدة بياناتك الجديدة المحدثة
-const SUPABASE_URL = 'https://tmwknvhxwfndrrhumvqo.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_Q0E47jEIc-aFTJkWKOGB9w_EX576xvO';
-const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+// إعدادات الاتصال بقاعدة بيانات JSONBin السريعة والآمنة
+const JSONBIN_CONFIG = {
+    apiKey: "$2a$10$Hj8N/vpuugwh9k/pupGakulkBIE4pq3W09JTAUiUKbtJfiWBdpJHS",
+    binId: "6aaa882affd5d160530df70d",
+    baseUrl: "https://api.jsonbin.io/v3/b"
+};
 
 const MASTER_ADMIN_EMAIL = 'abooraamoraa@gmail.com';
 
@@ -73,6 +74,38 @@ function verifyAdminAccess() {
     }
 }
 
+// دالة جلب البيانات العامة من السحابة
+async function cloudFetchData() {
+    try {
+        let response = await fetch(`${JSONBIN_CONFIG.baseUrl}/${JSONBIN_CONFIG.binId}/latest`, {
+            headers: { 'X-Master-Key': JSONBIN_CONFIG.apiKey }
+        });
+        let data = await response.json();
+        return data.record;
+    } catch (error) {
+        console.error("خطأ في الاتصال:", error);
+        return { games: [], messages: [] };
+    }
+}
+
+// دالة حفظ البيانات المحدثة في السحابة
+async function cloudSaveData(newDataObject) {
+    try {
+        let response = await fetch(`${JSONBIN_CONFIG.baseUrl}/${JSONBIN_CONFIG.binId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Master-Key': JSONBIN_CONFIG.apiKey
+            },
+            body: JSON.stringify(newDataObject)
+        });
+        return response.ok;
+    } catch (error) {
+        console.error("خطأ في الحفظ:", error);
+        return false;
+    }
+}
+
 async function loadAdminData() {
     loadPendingGames();
     loadAdminMessages();
@@ -80,69 +113,82 @@ async function loadAdminData() {
 
 async function loadPendingGames() {
     let container = document.getElementById('pendingGamesContainer');
-    let { data: games, error } = await _supabase.from('games').select('*');
+    let dbData = await cloudFetchData();
+    let games = dbData.games || [];
     
-    if(!error && games) {
-        if(games.length === 0) {
-            container.innerHTML = '<p>لا توجد ألعاب مضافة حالياً.</p>';
-            return;
-        }
-        let html = `<table><tr><th>العنوان</th><th>المطور</th><th>الحالة</th><th>إجراء</th></tr>`;
-        games.forEach(g => {
-            html += `<tr>
-                <td><b>${g.title}</b></td>
-                <td>${g.dev_name}</td>
-                <td style="color:${g.status === 'تمت الموافقة' ? 'green':'orange'};font-weight:bold;">${g.status || 'قيد المراجعة'}</td>
-                <td>
-                    <button onclick="updateGameStatus(${g.id}, 'تمت الموافقة')" style="background:green;color:#fff;border:none;padding:5px 10px;border-radius:5px;cursor:pointer;">قبول</button>
-                    <button onclick="deleteGame(${g.id})" style="background:red;color:#fff;border:none;padding:5px 10px;border-radius:5px;cursor:pointer;margin-right:5px;">حذف</button>
-                </td>
-            </tr>`;
-        });
-        html += `</table>`;
-        container.innerHTML = html;
+    if(games.length === 0) {
+        container.innerHTML = '<p>لا توجد ألعاب مضافة حالياً.</p>';
+        return;
     }
+    let html = `<table><tr><th>العنوان</th><th>المطور</th><th>الحالة</th><th>إجراء</th></tr>`;
+    games.forEach(g => {
+        html += `<tr>
+            <td><b>${g.title}</b></td>
+            <td>${g.dev_name}</td>
+            <td style="color:${g.status === 'تمت الموافقة' ? 'green':'orange'};font-weight:bold;">${g.status || 'قيد المراجعة'}</td>
+            <td>
+                <button onclick="updateGameStatus(${g.id}, 'تمت الموافقة')" style="background:green;color:#fff;border:none;padding:5px 10px;border-radius:5px;cursor:pointer;">قبول</button>
+                <button onclick="deleteGame(${g.id})" style="background:red;color:#fff;border:none;padding:5px 10px;border-radius:5px;cursor:pointer;margin-right:5px;">حذف</button>
+            </td>
+        </tr>`;
+    });
+    html += `</table>`;
+    container.innerHTML = html;
 }
 
 async function updateGameStatus(id, newStatus) {
-    let { error } = await _supabase.from('games').update({ status: newStatus }).eq('id', id);
-    if(!error) loadPendingGames();
+    let dbData = await cloudFetchData();
+    let games = dbData.games || [];
+    
+    games = games.map(g => {
+        if(g.id === id) { g.status = newStatus; }
+        return g;
+    });
+    
+    dbData.games = games;
+    let success = await cloudSaveData(dbData);
+    if(success) loadPendingGames();
 }
 
 async function deleteGame(id) {
     if(confirm('هل أنت متأكد من حذف هذه اللعبة؟')) {
-        let { error } = await _supabase.from('games').delete().eq('id', id);
-        if(!error) loadPendingGames();
+        let dbData = await cloudFetchData();
+        dbData.games = (dbData.games || []).filter(g => g.id !== id);
+        
+        let success = await cloudSaveData(dbData);
+        if(success) loadPendingGames();
     }
 }
 
 async function loadAdminMessages() {
     let container = document.getElementById('adminMessagesContainer');
-    let { data: msgs, error } = await _supabase.from('messages').select('*').order('id', { ascending: false });
+    let dbData = await cloudFetchData();
+    let msgs = dbData.messages || [];
 
-    if(!error && msgs) {
-        if(msgs.length === 0) {
-            container.innerHTML = '<p>لا توجد رسائل واردة.</p>';
-            return;
-        }
-        let html = `<table><tr><th>المرسل</th><th>البريد</th><th>الرسالة</th><th>إجراء</th></tr>`;
-        msgs.forEach(m => {
-            html += `<tr>
-                <td><b>${m.name}</b></td>
-                <td>${m.email}</td>
-                <td>${m.message}</td>
-                <td><button onclick="deleteMsg(${m.id})" style="background:#ff4d4d;color:#fff;border:none;padding:5px 10px;border-radius:5px;cursor:pointer;">حذف</button></td>
-            </tr>`;
-        });
-        html += `</table>`;
-        container.innerHTML = html;
+    if(msgs.length === 0) {
+        container.innerHTML = '<p>لا توجد رسائل واردة.</p>';
+        return;
     }
+    let html = `<table><tr><th>المرسل</th><th>البريد</th><th>الرسالة</th><th>إجراء</th></tr>`;
+    msgs.forEach(m => {
+        html += `<tr>
+            <td><b>${m.name}</b></td>
+            <td>${m.email}</td>
+            <td>${m.message}</td>
+            <td><button onclick="deleteMsg(${m.id})" style="background:#ff4d4d;color:#fff;border:none;padding:5px 10px;border-radius:5px;cursor:pointer;">حذف</button></td>
+        </tr>`;
+    });
+    html += `</table>`;
+    container.innerHTML = html;
 }
 
 async function deleteMsg(id) {
     if(confirm('هل تريد حذف هذه الرسالة؟')) {
-        let { error } = await _supabase.from('messages').delete().eq('id', id);
-        if(!error) loadAdminMessages();
+        let dbData = await cloudFetchData();
+        dbData.messages = (dbData.messages || []).filter(m => m.id !== id);
+        
+        let success = await cloudSaveData(dbData);
+        if(success) loadAdminMessages();
     }
 }
 </script>
