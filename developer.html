@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="بوابة المطورين المتقدمة - المنصة الإمبراطورية لإدارة وتطوير أبو العز العمري">
+<title>بوابة المطورين - POKI MEGA ENTERPRISE 2.0</title>
+<!-- ربط مكتبة Supabase السحابية -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root { 
+    --bg: #ffffff; 
+    --text: #0a0a0a; 
+    --accent: #000000; 
+    --border: #e0e0e0; 
+    --card-bg: #fafafa; 
+}
+* { box-sizing: border-box; transition: all 0.25s ease; }
+body { 
+    background: var(--bg); 
+    color: var(--text); 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    margin: 0; 
+    padding: 0; 
+    line-height: 1.8; 
+}
+header { 
+    background: #ffffff; 
+    border-bottom: 4px solid var(--accent); 
+    padding: 40px 20px; 
+    text-align: center; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+}
+.brand-badge {
+    display: inline-block;
+    background: #000;
+    color: #fff;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+h1 { margin: 0; font-size: 38px; color: #000; font-weight: 900; letter-spacing: -1px; }
+p.subtitle { color: #555; font-size: 16px; margin-top: 10px; font-weight: 500; }
+
+.nav-container { 
+    margin-top: 25px; 
+    display: flex; 
+    justify-content: center; 
+    flex-wrap: wrap; 
+    gap: 12px; 
+}
+.nav-btn { 
+    background: #fff; 
+    border: 2px solid var(--accent); 
+    color: var(--accent); 
+    padding: 12px 24px; 
+    border-radius: 30px; 
+    cursor: pointer; 
+    font-weight: 700; 
+    font-size: 14px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+.nav-btn:hover, .nav-btn.active-page { 
+    background: var(--accent); 
+    color: #fff; 
+    transform: translateY(-3px); 
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+.container { max-width: 900px; margin: 50px auto; padding: 0 25px; }
+
+.section-card { 
+    background: var(--card-bg); 
+    border: 2px solid var(--border); 
+    border-radius: 20px; 
+    padding: 45px; 
+    margin-bottom: 40px; 
+    box-shadow: 0 15px 35px rgba(0,0,0,0.02);
+}
+.section-card h2 {
+    font-size: 26px;
+    border-bottom: 3px solid #000;
+    padding-bottom: 12px;
+    margin-top: 0;
+    font-weight: 800;
+}
+
+.inp { 
+    width: 100%; 
+    padding: 14px 18px; 
+    margin: 12px 0 24px; 
+    background: #fff; 
+    border: 2px solid var(--border); 
+    color: #111; 
+    border-radius: 12px; 
+    box-sizing: border-box; 
+    font-size: 15px; 
+    font-family: inherit;
+}
+.inp:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 10px rgba(0,0,0,0.05); }
+
+label { font-weight: 700; color: #222; display: block; margin-bottom: 5px; }
+
+footer {
+    background: #000;
+    color: #fff;
+    text-align: center;
+    padding: 40px 20px;
+    margin-top: 80px;
+    border-top: 4px solid #333;
+}
+footer p { color: #bbb; margin: 5px 0; font-size: 14px; }
+footer b { color: #fff; }
+</style>
+</head>
+<body>
+
+<header>
+    <div class="brand-badge">Enterprise Edition 2.0</div>
+    <h1>🚀 بوابة المطورين المتقدمة</h1>
+    <p class="subtitle">انشر لعبتك البرمجية في المنصة الإمبراطورية | إشراف وتطوير: <b>أبو العز العمري</b></p>
+    
+    <div class="nav-container">
+        <a href="index.html" class="nav-btn">🏠 الرئيسية الإمبراطورية</a>
+        <a href="games.html" class="nav-btn">🎮 مكتبة الألعاب الشاملة</a>
+        <a href="developer.html" class="nav-btn active-page">🚀 بوابة المطورين المتقدمة</a>
+        <a href="leaderboard.html" class="nav-btn">🏆 لوحة الشرف والأبطال</a>
+        <a href="auth.html" class="nav-btn">🔐 حسابات المستخدمين</a>
+        <a href="contact.html" class="nav-btn">💬 اتصل بالإدارة</a>
+    </div>
+</header>
+
+<div class="container">
+    <div class="section-card">
+        <h2>📝 استمارة تقديم الألعاب السحابية الجديدة</h2>
+        <p style="color:#555;margin-bottom:30px;">قم بتعبئة بيانات اللعبة بدقة لترسل مباشرة إلى قاعدة بيانات السيرفر، حيث يتم مراجعتها واعتمادها للظهور في واجهة المنصة.</p>
+        
+        <label for="dName">اسم المطور / فريق العمل:</label>
+        <input type="text" id="dName" class="inp" placeholder="أدخل اسمك أو اسم فريقك البرمجي">
+
+        <label for="gTitle">عنوان اللعبة:</label>
+        <input type="text" id="gTitle" class="inp" placeholder="مثال: سباق السيارات الخارق">
+
+        <label for="gLink">رابط اللعبة المباشر (URL):</label>
+        <input type="text" id="gLink" class="inp" placeholder="https://example.com/game">
+
+        <label for="gYear">سنة الإطلاق:</label>
+        <input type="text" id="gYear" class="inp" value="2026">
+
+        <label for="gCat">التصنيف البرمجي / النوع:</label>
+        <input type="text" id="gCat" class="inp" placeholder="مثال: أكشن، سباق، ذكاء، مغامرة">
+
+        <button class="nav-btn" style="background:#000;color:#fff;border-color:#000;width:100%;padding:16px;justify-content:center;font-size:16px;margin-top:10px;" onclick="submitGameToCloud()">🚀 إرسال اللعبة إلى السحابة للمراجعة</button>
+        
+        <p id="devStatusMsg" style="margin-top:20px;font-weight:bold;text-align:center;"></p>
+    </div>
+</div>
+
+<footer>
+    <p><b>POKI MEGA ENTERPRISE SYSTEM 2.0</b></p>
+    <p>الإدارة الهندسية العليا والتطوير الشامل: أبو العز العمري</p>
+</footer>
+
+<script>
+const SUPABASE_URL = 'https://phtuydsplxlirsmwtjfe.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_HBhRMDvsAwpCs4W-eNLS-Q_kufLHq4p';
+const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+async function submitGameToCloud() {
+    let devName = document.getElementById('dName').value.trim();
+    let title = document.getElementById('gTitle').value.trim();
+    let link = document.getElementById('gLink').value.trim();
+    let year = document.getElementById('gYear').value.trim();
+    let category = document.getElementById('gCat').value.trim();
+    let statusMsg = document.getElementById('devStatusMsg');
+
+    if(!devName || !title || !link) {
+        statusMsg.innerText = 'يرجى تعبئة الحقول الأساسية (اسم المطور، عنوان اللعبة، والرابط)!';
+        statusMsg.style.color = 'red';
+        return;
+    }
+
+    statusMsg.innerText = 'جاري إرسال اللعبة إلى السحابة...';
+    statusMsg.style.color = '#555';
+
+    let { error } = await _supabase.from('games').insert([{
+        dev_name: devName,
+        title: title,
+        link: link,
+        year: year || '2026',
+        category: category || 'ألعاب تصفح',
+        status: 'قيد المراجعة'
+    }]);
+
+    if(error) {
+        statusMsg.innerText = 'حدث خطأ أثناء الاتصال بالسيرفر: ' + error.message;
+        statusMsg.style.color = 'red';
+    } else {
+        statusMsg.innerText = '✨ تم إرسال لعبتك بنجاح إلى قاعدة البيانات السحابية وهي بانتظار الاعتماد من لوحة الإدارة!';
+        statusMsg.style.color = 'green';
+        // تفريغ الحقول
+        document.getElementById('dName').value = '';
+        document.getElementById('gTitle').value = '';
+        document.getElementById('gLink').value = '';
+        document.getElementById('gCat').value = '';
+    }
+}
+</script>
+</body>
+</html>
