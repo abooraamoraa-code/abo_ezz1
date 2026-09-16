@@ -5,8 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="المنصة الإمبراطورية الضخمة لألعاب التصفح الفورية - إدارة وتطوير أبو العز العمري">
 <title>POKI MEGA ENTERPRISE 2.0 - المنصة الإمبراطورية</title>
-<!-- ربط مكتبة Supabase السحابية -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root { 
     --bg: #ffffff; 
@@ -25,7 +23,6 @@ body {
     padding: 0; 
     line-height: 1.8; 
 }
-/* الهيدر الإمبراطوري الضخم */
 header { 
     background: #ffffff; 
     border-bottom: 4px solid var(--accent); 
@@ -49,7 +46,6 @@ header {
 h1 { margin: 0; font-size: 42px; color: #000; font-weight: 900; letter-spacing: -1px; }
 p.subtitle { color: #555; font-size: 16px; margin-top: 10px; font-weight: 500; }
 
-/* شريط التنقل الاحترافي بين صفحات المنصة الضخمة */
 .nav-container { 
     margin-top: 25px; 
     display: flex; 
@@ -78,10 +74,8 @@ p.subtitle { color: #555; font-size: 16px; margin-top: 10px; font-weight: 500; }
     box-shadow: 0 6px 20px rgba(0,0,0,0.15);
 }
 
-/* تخطيط المحتوى الرئيسي */
 .container { max-width: 1200px; margin: 50px auto; padding: 0 25px; }
 
-/* قسم الإحصائيات الحية الفخم */
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -98,7 +92,6 @@ p.subtitle { color: #555; font-size: 16px; margin-top: 10px; font-weight: 500; }
 .stat-box h3 { margin: 0; font-size: 32px; color: #000; font-weight: 900; }
 .stat-box p { margin: 5px 0 0; color: #666; font-size: 14px; font-weight: 600; }
 
-/* الأقسام الطويلة والضخمة */
 .section-card { 
     background: var(--card-bg); 
     border: 2px solid var(--border); 
@@ -115,7 +108,6 @@ p.subtitle { color: #555; font-size: 16px; margin-top: 10px; font-weight: 500; }
     font-weight: 800;
 }
 
-/* شبكة الألعاب الإمبراطورية */
 .games-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -149,7 +141,6 @@ p.subtitle { color: #555; font-size: 16px; margin-top: 10px; font-weight: 500; }
     width: fit-content;
 }
 
-/* الفوتر الهندسي الفاخر */
 footer {
     background: #000;
     color: #fff;
@@ -169,7 +160,6 @@ footer b { color: #fff; }
     <h1>🌐 POKI MEGA ENTERPRISE PLATFORM</h1>
     <p class="subtitle">المنصة الهندسية الكبرى لألعاب التصفح السحابية الفورية | إشراف وتطوير: <b>أبو العز العمري</b></p>
     
-    <!-- شريط التنقل المتعدد بين صفحات المشروع الضخم -->
     <div class="nav-container">
         <a href="index.html" class="nav-btn active-page">🏠 الرئيسية الإمبراطورية</a>
         <a href="games.html" class="nav-btn">🎮 مكتبة الألعاب الشاملة</a>
@@ -182,14 +172,13 @@ footer b { color: #fff; }
 
 <div class="container">
 
-    <!-- قسم الإحصائيات الحية الفخمة -->
     <div class="stats-grid">
         <div class="stat-box">
             <h3 id="statGamesCount">0</h3>
             <p>لعبة معتمدة سحابياً</p>
         </div>
         <div class="stat-box">
-            <h3 id="statUsersCount">0</h3>
+            <h3 id="statUsersCount">1</h3>
             <p>مستخدم نشط في المنظومة</p>
         </div>
         <div class="stat-box">
@@ -198,7 +187,6 @@ footer b { color: #fff; }
         </div>
     </div>
 
-    <!-- القسم الرئيسي: الألعاب المعروضة حديثاً -->
     <div class="section-card">
         <h2>🎮 أحدث الألعاب الإمبراطورية المعتمدة (سحابياً)</h2>
         <p>استكشف نخبة ألعاب التصفح البرمجية المعتمدة رسمياً من قِبل إدارة المنصة والمطورين:</p>
@@ -207,10 +195,9 @@ footer b { color: #fff; }
         </div>
     </div>
 
-    <!-- قسم تفاصيل الهندسة والضخامة للمنصة -->
     <div class="section-card">
         <h2>🏛️ المعمارية الهندسية ونظام التشغيل المؤسسي</h2>
-        <p>تم تصميم هذا الإصدار الخارق (2.0) ليعمل بكفاءة فائقة تعتمد على المعمارية الموزعة؛ حيث تتوزع واجهات التصفح على صفحات مستقلة بالكامل لضمان سرعة استجابة مطلقة (Zero Latency)، بينما تتولى قاعدة بيانات <strong>Supabase</strong> إدارة العمليات والحسابات وأرشيف الألعاب على مدار الساعة بلا انقطاع.</p>
+        <p>تم تصميم هذا الإصدار الخارق (2.0) ليعمل بكفاءة فائقة تعتمد على المعمارية الموزعة؛ لضمان سرعة استجابة مطلقة (Zero Latency)، بينما تتولى قاعدة البيانات السحابية إدارة العمليات وأرشيف الألعاب على مدار الساعة بلا انقطاع.</p>
         <p>جميع الحقوق محفوظة © 2026 هندسة وتطوير البرمجيات: <b>أبو العز العمري</b>.</p>
     </div>
 
@@ -223,23 +210,32 @@ footer b { color: #fff; }
 </footer>
 
 <script>
-// إعداد الاتصال بقاعدة بيانات Supabase السحابية
-const SUPABASE_URL = 'https://phtuydsplxlirsmwtjfe.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_HBhRMDvsAwpCs4W-eNLS-Q_kufLHq4p';
-const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+// إعدادات الاتصال السحابي السريع عبر JSONBin
+const JSONBIN_CONFIG = {
+    apiKey: "$2a$10$Hj8N/vpuugwh9k/pupGakulkBIE4pq3W09JTAUiUKbtJfiWBdpJHS",
+    binId: "6aaa882affd5d160530df70d",
+    baseUrl: "https://api.jsonbin.io/v3/b"
+};
 
-// جلب الألعاب المعتمدة وإحصائيات النظام عند التحميل
 async function initHomeData() {
-    // جلب الألعاب المعتمدة
-    let { data: games, error: gError } = await _supabase.from('games').select('*').eq('status', 'تمت الموافقة');
-    if(!gError && games) {
-        document.getElementById('statGamesCount').innerText = games.length;
+    try {
+        let response = await fetch(`${JSONBIN_CONFIG.baseUrl}/${JSONBIN_CONFIG.binId}/latest`, {
+            headers: { 'X-Master-Key': JSONBIN_CONFIG.apiKey }
+        });
+        let resData = await response.json();
+        let games = resData.record.games || [];
+        
+        // تصفية الألعاب المعتمدة فقط
+        let approvedGames = games.filter(g => g.status === 'تمت الموافقة');
+        
+        document.getElementById('statGamesCount').innerText = approvedGames.length;
+        
         let html = '';
-        games.forEach(g => {
+        approvedGames.forEach(g => {
             html += `
                 <div class="game-item-card">
                     <div>
-                        <span class="game-tag">${g.category || 'ألعاب تصفح'} (${g.year || '2026'})</span>
+                        <span class="game-tag">${g.category || 'ألعاب تصفح'} (2026)</span>
                         <h3 style="margin:10px 0;font-size:20px;color:#000;">${g.title}</h3>
                         <p style="color:#555;font-size:14px;margin:5px 0 15px;">المطور: <b>${g.dev_name}</b></p>
                     </div>
@@ -247,15 +243,12 @@ async function initHomeData() {
                 </div>
             `;
         });
+        
         document.getElementById('homeApprovedGames').innerHTML = html || '<p style="grid-column: 1/-1; text-align:center; color:#666;">لا توجد ألعاب معتمدة حالياً. ترقبوا إطلاق أحدث الألعاب قريباً!</p>';
-    } else {
+        
+    } catch (error) {
+        console.error("خطأ في جلب الألعاب:", error);
         document.getElementById('homeApprovedGames').innerHTML = '<p style="color:red;">تعذر جلب الألعاب من السيرفر السحابي.</p>';
-    }
-
-    // جلب عدد المستخدمين
-    let { count, error: uError } = await _supabase.from('users').select('*', { count: 'exact', head: true });
-    if(!uError && count !== null) {
-        document.getElementById('statUsersCount').innerText = count;
     }
 }
 
