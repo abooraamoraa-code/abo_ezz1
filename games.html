@@ -5,8 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="مكتبة الألعاب الشاملة - المنصة الإمبراطورية لإدارة وتطوير أبو العز العمري">
 <title>مكتبة الألعاب الشاملة - POKI MEGA ENTERPRISE 2.0</title>
-<!-- ربط مكتبة Supabase السحابية -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root { 
     --bg: #ffffff; 
@@ -187,18 +185,29 @@ footer b { color: #fff; }
 </footer>
 
 <script>
-const SUPABASE_URL = 'https://phtuydsplxlirsmwtjfe.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_HBhRMDvsAwpCs4W-eNLS-Q_kufLHq4p';
-const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+// إعدادات الاتصال السحابي السريع عبر JSONBin
+const JSONBIN_CONFIG = {
+    apiKey: "$2a$10$Hj8N/vpuugwh9k/pupGakulkBIE4pq3W09JTAUiUKbtJfiWBdpJHS",
+    binId: "6aaa882affd5d160530df70d",
+    baseUrl: "https://api.jsonbin.io/v3/b"
+};
 
 let allLoadedGames = [];
 
 async function loadAllGames() {
-    let { data: games, error } = await _supabase.from('games').select('*').eq('status', 'تمت الموافقة');
-    if(!error && games) {
-        allLoadedGames = games;
+    try {
+        let response = await fetch(`${JSONBIN_CONFIG.baseUrl}/${JSONBIN_CONFIG.binId}/latest`, {
+            headers: { 'X-Master-Key': JSONBIN_CONFIG.apiKey }
+        });
+        let resData = await response.json();
+        let games = resData.record.games || [];
+        
+        // تصفية الألعاب المعتمدة فقط
+        allLoadedGames = games.filter(g => g.status === 'تمت الموافقة');
         renderGames(allLoadedGames);
-    } else {
+        
+    } catch (error) {
+        console.error("خطأ في جلب الألعاب:", error);
         document.getElementById('allGamesGrid').innerHTML = '<p style="color:red;grid-column:1/-1;text-align:center;">تعذر الاتصال بالسيرفر السحابي لجلب الألعاب.</p>';
     }
 }
@@ -209,7 +218,7 @@ function renderGames(gamesArray) {
         html += `
             <div class="game-item-card">
                 <div>
-                    <span class="game-tag">${g.category || 'ألعاب تصفح'} (${g.year || '2026'})</span>
+                    <span class="game-tag">${g.category || 'ألعاب تصفح'} (2026)</span>
                     <h3 style="margin:10px 0;font-size:20px;color:#000;">${g.title}</h3>
                     <p style="color:#555;font-size:14px;margin:5px 0 15px;">المطور: <b>${g.dev_name}</b></p>
                 </div>
