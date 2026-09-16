@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="حسابات المستخدمين - إشراف وتطوير أبو العز العمري">
+<title>حسابات المستخدمين - POKI MEGA ENTERPRISE 2.0</title>
+<!-- ربط مكتبة Supabase السحابية -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root { 
+    --bg: #ffffff; 
+    --text: #0a0a0a; 
+    --accent: #000000; 
+    --border: #e0e0e0; 
+    --card-bg: #fafafa; 
+}
+* { box-sizing: border-box; transition: all 0.25s ease; }
+body { 
+    background: var(--bg); 
+    color: var(--text); 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    margin: 0; 
+    padding: 0; 
+    line-height: 1.8; 
+}
+header { 
+    background: #ffffff; 
+    border-bottom: 4px solid var(--accent); 
+    padding: 40px 20px; 
+    text-align: center; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+}
+.brand-badge {
+    display: inline-block;
+    background: #000;
+    color: #fff;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+h1 { margin: 0; font-size: 38px; color: #000; font-weight: 900; letter-spacing: -1px; }
+p.subtitle { color: #555; font-size: 16px; margin-top: 10px; font-weight: 500; }
+
+.nav-container { 
+    margin-top: 25px; 
+    display: flex; 
+    justify-content: center; 
+    flex-wrap: wrap; 
+    gap: 12px; 
+}
+.nav-btn { 
+    background: #fff; 
+    border: 2px solid var(--accent); 
+    color: var(--accent); 
+    padding: 12px 24px; 
+    border-radius: 30px; 
+    cursor: pointer; 
+    font-weight: 700; 
+    font-size: 14px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+.nav-btn:hover, .nav-btn.active-page { 
+    background: var(--accent); 
+    color: #fff; 
+    transform: translateY(-3px); 
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+.container { max-width: 800px; margin: 50px auto; padding: 0 25px; }
+
+.section-card { 
+    background: var(--card-bg); 
+    border: 2px solid var(--border); 
+    border-radius: 20px; 
+    padding: 45px; 
+    margin-bottom: 40px; 
+    box-shadow: 0 15px 35px rgba(0,0,0,0.02);
+}
+.section-card h2 {
+    font-size: 26px;
+    border-bottom: 3px solid #000;
+    padding-bottom: 12px;
+    margin-top: 0;
+    font-weight: 800;
+}
+
+.inp { 
+    width: 100%; 
+    padding: 14px 18px; 
+    margin: 12px 0 24px; 
+    background: #fff; 
+    border: 2px solid var(--border); 
+    color: #111; 
+    border-radius: 12px; 
+    box-sizing: border-box; 
+    font-size: 15px; 
+    font-family: inherit;
+}
+.inp:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 10px rgba(0,0,0,0.05); }
+
+label { font-weight: 700; color: #22, #222; display: block; margin-bottom: 5px; }
+
+.auth-btns { display: flex; gap: 15px; margin-top: 10px; }
+.auth-btns button { flex: 1; padding: 15px; border-radius: 12px; font-weight: 700; font-size: 15px; cursor: pointer; }
+
+footer {
+    background: #000;
+    color: #fff;
+    text-align: center;
+    padding: 40px 20px;
+    margin-top: 80px;
+    border-top: 4px solid #333;
+}
+footer p { color: #bbb; margin: 5px 0; font-size: 14px; }
+footer b { color: #fff; }
+</style>
+</head>
+<body>
+
+<header>
+    <div class="brand-badge">Enterprise Edition 2.0</div>
+    <h1>🔐 حسابات المستخدمين سحابياً</h1>
+    <p class="subtitle">سجل وانضم إلى مجتمع الألعاب | إشراف وتطوير: <b>أبو العز العمري</b></p>
+    
+    <div class="nav-container">
+        <a href="index.html" class="nav-btn">🏠 الرئيسية الإمبراطورية</a>
+        <a href="games.html" class="nav-btn">🎮 مكتبة الألعاب الشاملة</a>
+        <a href="developer.html" class="nav-btn">🚀 بوابة المطورين المتقدمة</a>
+        <a href="leaderboard.html" class="nav-btn">🏆 لوحة الشرف والأبطال</a>
+        <a href="auth.html" class="nav-btn active-page">🔐 حسابات المستخدمين</a>
+        <a href="contact.html" class="nav-btn">💬 اتصل بالإدارة</a>
+    </div>
+</header>
+
+<div class="container">
+    <div class="section-card">
+        <h2>👤 بوابة التسجيل والدخول الآمن</h2>
+        <p style="color:#555;margin-bottom:30px;">أنشئ حسابك الجديد الآن واحصل على <strong>150 نقطة</strong> ترحيبية تسجل فوراً في لوحة الشرف الخاصة بالمنصة.</p>
+        
+        <label for="uMail">البريد الإلكتروني:</label>
+        <input type="email" id="uMail" class="inp" placeholder="name@example.com">
+
+        <label for="uPass">كلمة المرور الآمنة:</label>
+        <input type="password" id="uPass" class="inp" placeholder="أدخل كلمة مرور قوية">
+
+        <div class="auth-btns">
+            <button style="background:#000;color:#fff;border:2px solid #000;" onclick="cloudRegister()">إنشاء حساب جديد (+150 نقطة)</button>
+            <button style="background:#fff;color:#000;border:2px solid #000;" onclick="cloudLogin()">تسجيل الدخول</button>
+        </div>
+        
+        <p id="authMsg" style="margin-top:20px;font-weight:bold;text-align:center;"></p>
+    </div>
+</div>
+
+<footer>
+    <p><b>POKI MEGA ENTERPRISE SYSTEM 2.0</b></p>
+    <p>الإدارة الهندسية العليا والتطوير الشامل: أبو العز العمري</p>
+</footer>
+
+<script>
+const SUPABASE_URL = 'https://phtuydsplxlirsmwtjfe.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_HBhRMDvsAwpCs4W-eNLS-Q_kufLHq4p';
+const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+async function cloudRegister() {
+    let email = document.getElementById('uMail').value.trim();
+    let pass = document.getElementById('uPass').value.trim();
+    let msg = document.getElementById('authMsg');
+
+    if(!email || !pass) {
+        msg.innerText = 'يرجى إدخال البريد الإلكتروني وكلمة المرور!';
+        msg.style.color = 'red';
+        return;
+    }
+
+    let { error } = await _supabase.from('users').insert([{ email: email, points: 150 }]);
+    if(error) {
+        msg.innerText = 'هذا البريد مسجل مسبقاً في النظام أو حدث خطأ!';
+        msg.style.color = 'red';
+    } else {
+        msg.innerText = '✨ تم إنشاء الحساب بنجاح وتم منحك 150 نقطة ترحيبية في لوحة الشرف!';
+        msg.style.color = 'green';
+        document.getElementById('uMail').value = '';
+        document.getElementById('uPass').value = '';
+    }
+}
+
+async function cloudLogin() {
+    let email = document.getElementById('uMail').value.trim();
+    let msg = document.getElementById('authMsg');
+
+    if(!email) {
+        msg.innerText = 'يرجى إدخال البريد الإلكتروني على الأقل لتسجيل الدخول!';
+        msg.style.color = 'red';
+        return;
+    }
+
+    let { data, error } = await _supabase.from('users').select('*').eq('email', email);
+    if(!error && data && data.length > 0) {
+        msg.innerText = `👋 أهلاً بك مجدداً! تم تسجيل الدخول بنجاح. رصيدك الحالي: ${data[0].points} نقطة.`;
+        msg.style.color = 'green';
+    } else {
+        msg.innerText = 'البريد الإلكتروني غير مسجل في قاعدة البيانات!';
+        msg.style.color = 'red';
+    }
+}
+</script>
+</body>
+</html>
