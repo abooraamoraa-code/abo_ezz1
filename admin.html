@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow"> <!-- منع محركات البحث من أرشفة الصفحة -->
+<title>لوحة الإدارة السرية - POKI MEGA ENTERPRISE 2.0</title>
+<!-- ربط مكتبة Supabase السحابية -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root { 
+    --bg: #ffffff; 
+    --text: #0a0a0a; 
+    --accent: #000000; 
+    --border: #e0e0e0; 
+    --card-bg: #fafafa; 
+}
+* { box-sizing: border-box; transition: all 0.25s ease; }
+body { 
+    background: var(--bg); 
+    color: var(--text); 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    margin: 0; 
+    padding: 0; 
+    line-height: 1.8; 
+}
+header { 
+    background: #000; 
+    color: #fff;
+    border-bottom: 4px solid #333; 
+    padding: 30px 20px; 
+    text-align: center; 
+}
+.container { max-width: 1000px; margin: 40px auto; padding: 0 25px; }
+.section-card { 
+    background: var(--card-bg); 
+    border: 2px solid var(--border); 
+    border-radius: 20px; 
+    padding: 35px; 
+    margin-bottom: 30px; 
+}
+.section-card h2 {
+    font-size: 24px;
+    border-bottom: 3px solid #000;
+    padding-bottom: 10px;
+    margin-top: 0;
+}
+.inp { 
+    width: 100%; 
+    padding: 14px 18px; 
+    margin: 10px 0 20px; 
+    background: #fff; 
+    border: 2px solid var(--border); 
+    color: #111; 
+    border-radius: 12px; 
+    font-size: 15px; 
+}
+.btn { 
+    background: #000; 
+    color: #fff; 
+    border: 2px solid #000; 
+    padding: 12px 24px; 
+    border-radius: 10px; 
+    font-weight: 700; 
+    cursor: pointer; 
+}
+.btn:hover { background: #333; }
+table { width: 100%; border-collapse: collapse; margin-top: 20px; background: #fff; border-radius: 12px; overflow: hidden; border: 2px solid var(--border); }
+th, td { padding: 14px 16px; text-align: right; border-bottom: 1px solid var(--border); }
+th { background: #000; color: #fff; font-size: 14px; }
+tr:hover { background: #f9f9f9; }
+</style>
+</head>
+<body>
+
+<header>
+    <h1>🔒 لوحة الإدارة السرية المطلقة</h1>
+    <p>منطقة محظورة ومخفية عن العامة | إشراف: أبو العز العمري</p>
+</header>
+
+<div class="container">
+    <!-- بوابة تسجيل دخول المدير السحابية -->
+    <div id="loginGate" class="section-card">
+        <h2>🔑 التحقق من هوية المدير العام</h2>
+        <p>أدخل البريد الإلكتروني الإداري المعتمد للوصول إلى محتويات اللوحة:</p>
+        <input type="email" id="adminEmailInput" class="inp" placeholder="أدخل البريد الإلكتروني للمدير...">
+        <button class="btn" onclick="verifyAdminAccess()">دخول آمن سحابياً</button>
+        <p id="loginErrorMsg" style="color:red; font-weight:bold; margin-top:15px;"></p>
+    </div>
+
+    <!-- لوحة التحكم الفعلية (مخفية افتراضياً ولا تظهر إلا بعد التحقق) -->
+    <div id="adminPanelContent" style="display: none;">
+        
+        <!-- إدارة الألعاب -->
+        <div class="section-card">
+            <h2>🎮 مراجعة واعتماد الألعاب الجديدة</h2>
+            <div id="pendingGamesContainer">جاري جلب الألعاب...</div>
+        </div>
+
+        <!-- إدارة رسائل الزوار -->
+        <div class="section-card">
+            <h2>💬 صندوق رسائل الزوار والإدارة</h2>
+            <div id="adminMessagesContainer">جاري جلب الرسائل...</div>
+        </div>
+        
+    </div>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://phtuydsplxlirsmwtjfe.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_HBhRMDvsAwpCs4W-eNLS-Q_kufLHq4p';
+const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// البريد الإلكتروني المصرح له فقط بالدخول
+const MASTER_ADMIN_EMAIL = 'abooraamoraa@gmail.com';
+
+function verifyAdminAccess() {
+    let enteredEmail = document.getElementById('adminEmailInput').value.trim();
+    let errorMsg = document.getElementById('loginErrorMsg');
+
+    if(enteredEmail === MASTER_ADMIN_EMAIL) {
+        document.getElementById('loginGate').style.display = 'none';
+        document.getElementById('adminPanelContent').style.display = 'block';
+        loadAdminData();
+    } else {
+        errorMsg.innerText = '⚠️ البريد المدخل غير مصرح له بإدارة النظام!';
+    }
+}
+
+async function loadAdminData() {
+    loadPendingGames();
+    loadAdminMessages();
+}
+
+async function loadPendingGames() {
+    let container = document.getElementById('pendingGamesContainer');
+    let { data: games, error } = await _supabase.from('games').select('*');
+    
+    if(!error && games) {
+        if(games.length === 0) {
+            container.innerHTML = '<p>لا توجد ألعاب مضافة حالياً.</p>';
+            return;
+        }
+        let html = `<table><tr><th>العنوان</th><th>المطور</th><th>الحالة</th><th>إجراء</th></tr>`;
+        games.forEach(g => {
+            html += `<tr>
+                <td><b>${g.title}</b></td>
+                <td>${g.dev_name}</td>
+                <td style="color:${g.status === 'تمت الموافقة' ? 'green':'orange'};font-weight:bold;">${g.status || 'قيد المراجعة'}</td>
+                <td>
+                    <button onclick="updateGameStatus(${g.id}, 'تمت الموافقة')" style="background:green;color:#fff;border:none;padding:5px 10px;border-radius:5px;cursor:pointer;">قبول</button>
+                    <button onclick="deleteGame(${g.id})" style="background:red;color:#fff;border:none;padding:5px 10px;border-radius:5px;cursor:pointer;margin-right:5px;">حذف</button>
+                </td>
+            </tr>`;
+        });
+        html += `</table>`;
+        container.innerHTML = html;
+    }
+}
+
+async function updateGameStatus(id, newStatus) {
+    let { error } = await _supabase.from('games').update({ status: newStatus }).eq('id', id);
+    if(!error) loadPendingGames();
+    else alert('حدث خطأ أثناء التحديث!');
+}
+
+async function deleteGame(id) {
+    if(confirm('هل أنت متأكد من حذف هذه اللعبة؟')) {
+        let { error } = await _supabase.from('games').delete().eq('id', id);
+        if(!error) loadPendingGames();
+    }
+}
+
+async function loadAdminMessages() {
+    let container = document.getElementById('adminMessagesContainer');
+    let { data: msgs, error } = await _supabase.from('messages').select('*').order('id', { ascending: false });
+
+    if(!error && msgs) {
+        if(msgs.length === 0) {
+            container.innerHTML = '<p>لا توجد رسائل واردة.</p>';
+            return;
+        }
+        let html = `<table><tr><th>المرسل</th><th>البريد</th><th>الرسالة</th><th>إجراء</th></tr>`;
+        msgs.forEach(m => {
+            html += `<tr>
+                <td><b>${m.name}</b></td>
+                <td>${m.email}</td>
+                <td>${m.message}</td>
+                <td><button onclick="deleteMsg(${m.id})" style="background:#ff4d4d;color:#fff;border:none;padding:5px 10px;border-radius:5px;cursor:pointer;">حذف</button></td>
+            </tr>`;
+        });
+        html += `</table>`;
+        container.innerHTML = html;
+    }
+}
+
+async function deleteMsg(id) {
+    if(confirm('هل تريد حذف هذه الرسالة؟')) {
+        let { error } = await _supabase.from('messages').delete().eq('id', id);
+        if(!error) loadAdminMessages();
+    }
+}
+</script>
+</body>
+</html>
