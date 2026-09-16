@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="اتصل بالإدارة ولوحة التحكم - إشراف وتطوير أبو العز العمري">
+<title>اتصل بالإدارة - POKI MEGA ENTERPRISE 2.0</title>
+<!-- ربط مكتبة Supabase السحابية -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root { 
+    --bg: #ffffff; 
+    --text: #0a0a0a; 
+    --accent: #000000; 
+    --border: #e0e0e0; 
+    --card-bg: #fafafa; 
+}
+* { box-sizing: border-box; transition: all 0.25s ease; }
+body { 
+    background: var(--bg); 
+    color: var(--text); 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    margin: 0; 
+    padding: 0; 
+    line-height: 1.8; 
+}
+header { 
+    background: #ffffff; 
+    border-bottom: 4px solid var(--accent); 
+    padding: 40px 20px; 
+    text-align: center; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+}
+.brand-badge {
+    display: inline-block;
+    background: #000;
+    color: #fff;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+h1 { margin: 0; font-size: 38px; color: #000; font-weight: 900; letter-spacing: -1px; }
+p.subtitle { color: #555; font-size: 16px; margin-top: 10px; font-weight: 500; }
+
+.nav-container { 
+    margin-top: 25px; 
+    display: flex; 
+    justify-content: center; 
+    flex-wrap: wrap; 
+    gap: 12px; 
+}
+.nav-btn { 
+    background: #fff; 
+    border: 2px solid var(--accent); 
+    color: var(--accent); 
+    padding: 12px 24px; 
+    border-radius: 30px; 
+    cursor: pointer; 
+    font-weight: 700; 
+    font-size: 14px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+.nav-btn:hover, .nav-btn.active-page { 
+    background: var(--accent); 
+    color: #fff; 
+    transform: translateY(-3px); 
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+.container { max-width: 900px; margin: 50px auto; padding: 0 25px; }
+
+.section-card { 
+    background: var(--card-bg); 
+    border: 2px solid var(--border); 
+    border-radius: 20px; 
+    padding: 45px; 
+    margin-bottom: 40px; 
+    box-shadow: 0 15px 35px rgba(0,0,0,0.02);
+}
+.section-card h2 {
+    font-size: 26px;
+    border-bottom: 3px solid #000;
+    padding-bottom: 12px;
+    margin-top: 0;
+    font-weight: 800;
+}
+
+.inp, textarea { 
+    width: 100%; 
+    padding: 14px 18px; 
+    margin: 12px 0 24px; 
+    background: #fff; 
+    border: 2px solid var(--border); 
+    color: #111; 
+    border-radius: 12px; 
+    box-sizing: border-box; 
+    font-size: 15px; 
+    font-family: inherit;
+}
+.inp:focus, textarea:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 10px rgba(0,0,0,0.05); }
+textarea { resize: vertical; min-height: 120px; }
+
+label { font-weight: 700; color: #222; display: block; margin-bottom: 5px; }
+
+.btn-submit { 
+    background: #000; 
+    color: #fff; 
+    border: 2px solid #000; 
+    padding: 15px 30px; 
+    border-radius: 12px; 
+    font-weight: 700; 
+    font-size: 16px; 
+    cursor: pointer; 
+    width: 100%; 
+}
+.btn-submit:hover { background: #333; transform: translateY(-2px); }
+
+table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    margin-top: 20px; 
+    background: #fff; 
+    border-radius: 12px; 
+    overflow: hidden; 
+    border: 2px solid var(--border); 
+}
+th, td { 
+    padding: 14px 18px; 
+    text-align: right; 
+    border-bottom: 1px solid var(--border); 
+}
+th { background: #000; color: #fff; font-weight: 700; font-size: 14px; }
+tr:hover { background: #f9f9f9; }
+
+footer {
+    background: #000;
+    color: #fff;
+    text-align: center;
+    padding: 40px 20px;
+    margin-top: 80px;
+    border-top: 4px solid #333;
+}
+footer p { color: #bbb; margin: 5px 0; font-size: 14px; }
+footer b { color: #fff; }
+</style>
+</head>
+<body>
+
+<header>
+    <div class="brand-badge">Enterprise Edition 2.0</div>
+    <h1>💬 اتصل بالإدارة ولوحة التحكم</h1>
+    <p class="subtitle">تواصل معنا سحابياً | إشراف وتطوير: <b>أبو العز العمري</b></p>
+    
+    <div class="nav-container">
+        <a href="index.html" class="nav-btn">🏠 الرئيسية الإمبراطورية</a>
+        <a href="games.html" class="nav-btn">🎮 مكتبة الألعاب الشاملة</a>
+        <a href="developer.html" class="nav-btn">🚀 بوابة المطورين المتقدمة</a>
+        <a href="leaderboard.html" class="nav-btn">🏆 لوحة الشرف والأبطال</a>
+        <a href="auth.html" class="nav-btn">🔐 حسابات المستخدمين</a>
+        <a href="contact.html" class="nav-btn active-page">💬 اتصل بالإدارة</a>
+    </div>
+</header>
+
+<div class="container">
+    <div class="section-card">
+        <h2>📩 أرسل رسالة إلى الإدارة العليا</h2>
+        <p style="color:#555;margin-bottom:25px;">هل لديك اقتراح، استفسار، أو واجهتك مشكلة؟ أرسل رسالتك وسوف تتخزن مباشرة في قاعدة البيانات السحابية.</p>
+        
+        <label for="cName">الاسم الكريم:</label>
+        <input type="text" id="cName" class="inp" placeholder="أدخل اسمك هنا">
+
+        <label for="cEmail">البريد الإلكتروني:</label>
+        <input type="email" id="cEmail" class="inp" placeholder="name@example.com">
+
+        <label for="cMsg">نص الرسالة:</label>
+        <textarea id="cMsg" class="inp" placeholder="اكتب رسالتك أو اقتراحك بالتفصيل..."></textarea>
+
+        <button class="btn-submit" onclick="sendContactMessage()">إرسال الرسالة سحابياً 🚀</button>
+        <p id="contactStatus" style="margin-top:15px;font-weight:bold;text-align:center;"></p>
+    </div>
+
+    <!-- لوحة التحكم السرية للإدارة -->
+    <div class="section-card" style="border: 2px dashed #000;">
+        <h2>🛠️ لوحة التحكم السرية للإدارة العليا</h2>
+        <p style="color:#555;">عرض وإدارة الرسائل الواردة من الزوار والمستخدمين (خاص بالمهندس أبو العز العمري).</p>
+        
+        <div style="margin: 20px 0;">
+            <button class="nav-btn" onclick="loadAdminMessages()">🔄 تحديث قائمة الرسائل</button>
+        </div>
+
+        <div id="adminMessagesContainer">
+            <p style="color:#666;">انقر على زر التحديث أعلاه لعرض الرسائل الواردة سحابياً.</p>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p><b>POKI MEGA ENTERPRISE SYSTEM 2.0</b></p>
+    <p>الإدارة الهندسية العليا والتطوير الشامل: أبو العز العمري</p>
+</footer>
+
+<script>
+const SUPABASE_URL = 'https://phtuydsplxlirsmwtjfe.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_HBhRMDvsAwpCs4W-eNLS-Q_kufLHq4p';
+const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+async function sendContactMessage() {
+    let name = document.getElementById('cName').value.trim();
+    let email = document.getElementById('cEmail').value.trim();
+    let message = document.getElementById('cMsg').value.trim();
+    let status = document.getElementById('contactStatus');
+
+    if(!name || !email || !message) {
+        status.innerText = 'يرجى تعبئة جميع الحقول قبل الإرسال!';
+        status.style.color = 'red';
+        return;
+    }
+
+    let { error } = await _supabase.from('messages').insert([{ name: name, email: email, message: message }]);
+    if(error) {
+        status.innerText = 'حدث خطأ أثناء إرسال الرسالة للسيرفر!';
+        status.style.color = 'red';
+    } else {
+        status.innerText = '✨ تم إرسال رسالتك بنجاح إلى الإدارة العليا!';
+        status.style.color = 'green';
+        document.getElementById('cName').value = '';
+        document.getElementById('cEmail').value = '';
+        document.getElementById('cMsg').value = '';
+    }
+}
+
+async function loadAdminMessages() {
+    let container = document.getElementById('adminMessagesContainer');
+    container.innerHTML = 'جاري تحميل الرسائل من قاعدة البيانات...';
+
+    let { data: msgs, error } = await _supabase.from('messages').select('*').order('id', { ascending: false });
+
+    if(!error && msgs) {
+        if(msgs.length === 0) {
+            container.innerHTML = '<p style="color:#666;">لا توجد أي رسائل واردة حالياً.</p>';
+            return;
+        }
+
+        let html = `<table><tr><th>المرسل</th><th>البريد</th><th>الرسالة</th><th>إجراء</th></tr>`;
+        msgs.forEach(m => {
+            html += `<tr>
+                <td><b>${m.name}</b></td>
+                <td>${m.email}</td>
+                <td>${m.message}</td>
+                <td><button onclick="deleteMsg(${m.id})" style="background:#ff4d4d;color:#fff;border:none;padding:6px 12px;border-radius:6px;cursor:pointer;font-weight:bold;">حذف</button></td>
+            </tr>`;
+        });
+        html += `</table>`;
+        container.innerHTML = html;
+    } else {
+        container.innerHTML = '<p style="color:red;">تعذر جلب الرسائل من السيرفر السحابي.</p>';
+    }
+}
+
+async function deleteMsg(id) {
+    if(confirm('هل أنت متأكد من حذف هذه الرسالة من السيرفر؟')) {
+        let { error } = await _supabase.from('messages').delete().eq('id', id);
+        if(!error) {
+            loadAdminMessages();
+        } else {
+            alert('حدث خطأ أثناء محاولة الحذف!');
+        }
+    }
+}
+</script>
+</body>
+</html>
